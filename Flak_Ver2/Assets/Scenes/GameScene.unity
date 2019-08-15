@@ -394,6 +394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fd73f17815316b4695d21532dae16ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectRC: {fileID: 0}
+  controllerRC: {fileID: 0}
   rend: {fileID: 249026843}
 --- !u!114 &161939058
 MonoBehaviour:
@@ -919,7 +921,7 @@ SpriteRenderer:
   m_Size: {x: 3.55, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &288285676 stripped
@@ -1955,6 +1957,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 901ab9d6ce8066248ba215119d5bbb2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectCS: {fileID: 0}
+  controllerCS: {fileID: 0}
   rotate_speed: 15
 --- !u!1 &982340877
 GameObject:
@@ -3746,6 +3750,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c13581b70f151f6479c1b13cfaab9ed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ControllerGBS: {fileID: 0}
+  ObjectGBS: {fileID: 0}
   rotate_speed: 40
 --- !u!1 &2119071349
 GameObject:
@@ -3784,7 +3790,7 @@ MonoBehaviour:
   Pause: {fileID: 706085994}
   PauseBackGame: {fileID: 1445249131}
   BackGameButton: {fileID: 1445249133}
-  StateGC: 0
+  StateGCS: 0
   AudioStart: {fileID: 8300000, guid: 13ae8f521488d944a88e2f6ef7448771, type: 3}
 --- !u!4 &2119071351
 Transform:
@@ -3794,7 +3800,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2119071349}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.1893206, y: -33.617916, z: 32.68702}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

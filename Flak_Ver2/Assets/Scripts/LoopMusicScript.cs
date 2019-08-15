@@ -2,21 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LoopScript : MonoBehaviour {
+public class LoopMusicScript : MonoBehaviour {
+
+    public GameControllerScript ControllerLMS;
+    public GameObject ObjectLMS;
+    bool StateLMS;
 
     AudioSource LoopSource;
-
-    public AudioClip AudioTrain;
 
     double BGMDelay;
     public double DecideDelayTime;
     bool NowPlay;
 
-    public GameControllerScript ControllerRS;
-    public GameObject ObjectRS;
-    bool StateRS;
-
-    public bool HumanStateRS;
+    public bool HumanStateLMS;
 
     // Use this for initialization
     void Start () {
@@ -24,34 +22,44 @@ public class LoopScript : MonoBehaviour {
         LoopSource = GetComponent<AudioSource>();
         LoopPause();
 
-        HumanStateRS = false;
+        HumanStateLMS = false;
 
-        ObjectRS = GameObject.Find("GameControllerScript");
-        ControllerRS = ObjectRS.GetComponent<GameControllerScript>();
+        ObjectLMS = GameObject.Find("GameController");
+        if (ObjectLMS != null)
+        {
+            ControllerLMS = ObjectLMS.GetComponent<GameControllerScript>();
+        }
+        else
+        {
+            StateLMS = false;
+        }
 
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        StateRS = ControllerRS.GetComponent<GameControllerScript>().StateGC;
+        if (ObjectLMS != null)
+        {
+            StateLMS = ControllerLMS.StateGCS;
+        }
         BGMDelay += Time.deltaTime;
 
         if (BGMDelay>= DecideDelayTime && NowPlay == false)
         { 
             LoopUnpause();
 
-            HumanStateRS = true;
+            HumanStateLMS = true;
 
             NowPlay = true;
         }
 
 
-        if (StateRS == false)
+        if (StateLMS == false)
         {
             LoopPause();
 
-            HumanStateRS = false;
+            HumanStateLMS = false;
         }
     }
 

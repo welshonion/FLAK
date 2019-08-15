@@ -18,7 +18,7 @@ public class EnemyScript : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            Debug.Log("over");
+            //Debug.Log("over");
             gameController.SendMessage("Jud_GameOver");
 
         }

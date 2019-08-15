@@ -32,12 +32,12 @@ public class GameControllerScript : MonoBehaviour
     public GameObject Pause;
     public GameObject PauseBackGame;
     public Button BackGameButton;
-    public bool StateGC;
+    public bool StateGCS;//if true then move else stop
     public static bool TweetBool;
 
     int ScoreSpace;
-    int RankingSpace;
-    int RankingSpace2;
+    int ScoreForRanking;
+    int ScoreForRankingTmp;
 
     bool jud_gameover;
 
@@ -72,7 +72,7 @@ public class GameControllerScript : MonoBehaviour
             case State.Play:
                 if (jud_gameover)
                 {
-                    Debug.Log("switch");
+                    Debug.Log("switch_gameover");
                     GameOver();
                 }
                 break;
@@ -95,7 +95,7 @@ public class GameControllerScript : MonoBehaviour
         stateLabel.gameObject.SetActive(true);
         stateLabel.text = "Press Space Key";
 
-        StateGC = false;
+        StateGCS = false;
         TweetBool = false;
 
         Time.timeScale = 0;
@@ -115,7 +115,7 @@ public class GameControllerScript : MonoBehaviour
         stateLabel.gameObject.SetActive(false);
         stateLabel.text = "";
 
-        StateGC = true;
+        StateGCS = true;
     }
 
     public void Stop()
@@ -131,7 +131,7 @@ public class GameControllerScript : MonoBehaviour
             BackGameButton.gameObject.SetActive(true);
 
             BGMSource.Pause();
-            StateGC = false;
+            StateGCS = false;
 
             Time.timeScale = 0;
         }
@@ -143,7 +143,7 @@ public class GameControllerScript : MonoBehaviour
         Time.timeScale = 1;
 
         BGMSource.UnPause();
-        StateGC = true;
+        StateGCS = true;
 
         stateLabel.gameObject.SetActive(false);
         BackGameButton.gameObject.SetActive(false);
@@ -163,7 +163,7 @@ public class GameControllerScript : MonoBehaviour
 
         /////foreach (ScrollObject so in scrollObjects) so.enabled = false;
 
-        StateGC = false;
+        StateGCS = false;
         BGMSource.Pause();
         TweetBool = true;
 
@@ -171,17 +171,17 @@ public class GameControllerScript : MonoBehaviour
         stateLabel.gameObject.SetActive(true);
         stateLabel.text = "GameOver";
 
-        RankingSpace2 = score;
+        ScoreForRanking = score;
 
         for (int m = 0; m < 5; m++)
         {
-            if (RankingSpace2 > HighScoreSceneScript.Ranking[m])
+            if (ScoreForRanking > HighScoreSceneScript.Ranking[m])
             {
-                RankingSpace = HighScoreSceneScript.Ranking[m];
+                ScoreForRankingTmp = HighScoreSceneScript.Ranking[m];
 
-                HighScoreSceneScript.Ranking[m] = RankingSpace2;
+                HighScoreSceneScript.Ranking[m] = ScoreForRanking;
 
-                RankingSpace2 = RankingSpace;
+                ScoreForRanking = ScoreForRankingTmp;
             }
 
         }

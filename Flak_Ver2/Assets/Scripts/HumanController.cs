@@ -21,9 +21,9 @@ public class HumanController : MonoBehaviour {
     public AudioClip AudioJump;
     public AudioClip AudioDead;
 
-    public LoopScript ControllerHC;
+    public LoopMusicScript ControllerHC;
     public GameObject ObjectHC;
-    bool HumanStateHC;
+    //bool HumanStateHC;
 
     public bool IsDead()
     {
@@ -42,15 +42,15 @@ public class HumanController : MonoBehaviour {
     {
         SourceJump = GetComponent<AudioSource>();
         ObjectHC = GameObject.Find("LoopBGM");
-        ControllerHC = ObjectHC.GetComponent<LoopScript>();        
+        ControllerHC = ObjectHC.GetComponent<LoopMusicScript>();        
     }
 
     // Update is called once per frame
     void Update () {
 
-        HumanStateHC = ControllerHC.GetComponent<LoopScript>().HumanStateRS;
+        //HumanStateHC = ControllerHC.GetComponent<LoopScript>().HumanStateLMS;
 
-        if(Input.GetButtonDown("Fire1") && HumanStateHC == true && transform.position.y < maxHeight && jumpNum <= 1)
+        if(Input.GetButtonDown("Fire1") /*&& HumanStateHC == true*/ && transform.position.y < maxHeight && jumpNum <= 1)
         {
             Jump();
 

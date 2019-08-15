@@ -30,7 +30,7 @@ public class ScrollObject : MonoBehaviour {
 
         if (transform.position.x <= endPosition) ScrollEnd();
 
-        StateSO = ControllerSO.GetComponent<GameControllerScript>().StateGC;
+        StateSO = ControllerSO.GetComponent<GameControllerScript>().StateGCS;
 
         //       Debug.Log(accelbool);
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ClearTrigger : MonoBehaviour {
 
-    GameObject gameController;
+    /*GameObject gameController;
 
 	// Use this for initialization
 	void Start () {
@@ -14,5 +14,5 @@ public class ClearTrigger : MonoBehaviour {
 	// Update is called once per frame
 	void OnTriggerExit2D(Collider2D other) {
         gameController.SendMessage("IncreaseScore");
-	}
+	}*/
 }

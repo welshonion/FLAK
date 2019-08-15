@@ -18,6 +18,6 @@ public class HowToScript : MonoBehaviour {
 
     void HowToVoid()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("GameScene");
     }
 }

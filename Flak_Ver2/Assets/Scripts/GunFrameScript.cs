@@ -3,8 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunBodyScript : MonoBehaviour
+public class GunFrameScript : MonoBehaviour
 {
+    public GameControllerScript ControllerGFS;
+    public GameObject ObjectGFS;
+    bool StateGFS;
+
     [SerializeField]
     private float bullet_power = 100.0f;
     [SerializeField]
@@ -22,25 +26,37 @@ public class GunBodyScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        ObjectGFS = GameObject.Find("GameController");
+        if (ObjectGFS != null)
+        {
+            ControllerGFS = ObjectGFS.GetComponent<GameControllerScript>();
+        }
+        else
+        {
+            StateGFS = false;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (ObjectGFS != null)
+        {
+            StateGFS = ControllerGFS.StateGCS;
+        }
         gun_angle = transform.localEulerAngles.x;
         if (gun_angle > 180) gun_angle -= 360.0f;
 
-        if (Input.GetKey(KeyCode.W) && gun_angle > -40)
+        if (Input.GetKey(KeyCode.W) && gun_angle > -40 && StateGFS)
         {
             transform.Rotate(-1 * rotate_speed * Time.deltaTime, 0, 0);
         }
-        if (Input.GetKey(KeyCode.S) && gun_angle < 20)
+        if (Input.GetKey(KeyCode.S) && gun_angle < 10 && StateGFS)
         {
             transform.Rotate(1 * rotate_speed * Time.deltaTime, 0, 0);
         }
 
-        if (Input.GetKey(KeyCode.J))
+        if (Input.GetKey(KeyCode.J) && StateGFS)
         {
             Shot();
         }

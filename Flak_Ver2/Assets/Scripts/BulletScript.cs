@@ -11,8 +11,17 @@ public class BulletScript : MonoBehaviour
     GameObject gameController;
 
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        gameController = GameObject.FindWithTag("GameController");
+    }
+
     // Update is called once per frame
-    
+    void Update()
+    {
+        
+    }
 
     void OnCollisionEnter(Collision col)
     {
@@ -26,19 +35,6 @@ public class BulletScript : MonoBehaviour
 
         }
         Destroy(gameObject);
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        gameController = GameObject.FindWithTag("GameController");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
 }
