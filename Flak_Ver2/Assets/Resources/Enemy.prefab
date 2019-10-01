@@ -1930,9 +1930,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ac1ac3169ace1488167d393de28932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DecideDelayTime: 0
   ControllerLMS: {fileID: 0}
   ObjectLMS: {fileID: 0}
+  DecideDelayTime: 0
   HumanStateLMS: 0
 --- !u!82 &6312557736223903457
 AudioSource:

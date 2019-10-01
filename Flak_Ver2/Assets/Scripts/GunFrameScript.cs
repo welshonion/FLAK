@@ -22,6 +22,12 @@ public class GunFrameScript : MonoBehaviour
 
     System.Random firing_rnd = new System.Random();
 
+    public AudioClip machineSound;
+    AudioSource[] audioSource;
+    int soundNum = 0;
+
+
+    float shottime = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +36,7 @@ public class GunFrameScript : MonoBehaviour
         if (ObjectGFS != null)
         {
             ControllerGFS = ObjectGFS.GetComponent<GameControllerScript>();
+            audioSource = GetComponents<AudioSource>();
         }
         else
         {
@@ -40,6 +47,8 @@ public class GunFrameScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        shottime += Time.deltaTime;
+
         if (ObjectGFS != null)
         {
             StateGFS = ControllerGFS.StateGCS;
@@ -56,14 +65,20 @@ public class GunFrameScript : MonoBehaviour
             transform.Rotate(1 * rotate_speed * Time.deltaTime, 0, 0);
         }
 
-        if (Input.GetKey(KeyCode.J) && StateGFS)
+        if (Input.GetKey(KeyCode.J) && StateGFS && shottime > 0.1f)
         {
             Shot();
+            shottime = 0.0f;
         }
     }
 
     void Shot()
     {
+
+        //audioSource.Stop();
+        audioSource[soundNum].PlayOneShot(machineSound);
+        soundNum = (soundNum + 1) % 4;
+        audioSource[soundNum].Stop();
         firing_angle_x = ((float)(firing_rnd.Next(100)) / 50.0f) - 5.0f;
         firing_angle_y = ((float)(firing_rnd.Next(100)) / 50.0f) - 5.0f;
         //Debug.Log("shot");
