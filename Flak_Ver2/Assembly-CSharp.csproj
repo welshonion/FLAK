@@ -83,6 +83,7 @@
      <Compile Include="Assets\Scripts\LoopMusicScript.cs" />
      <Compile Include="Assets\Scripts\ParticleScript.cs" />
      <Compile Include="Assets\Scripts\PointerScript.cs" />
+     <Compile Include="Assets\Scripts\PropellerScript.cs" />
      <Compile Include="Assets\Scripts\RadarController.cs" />
      <Compile Include="Assets\Scripts\RaycastScript.cs" />
      <Compile Include="Assets\Scripts\ScrollObject.cs" />

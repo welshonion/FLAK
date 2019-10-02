@@ -38,6 +38,7 @@ public class EnemyScript : MonoBehaviour
         {
             //Debug.Log("over");
             gameController.SendMessage("Jud_GameOver");
+            Destroy(this.gameObject);
 
         }
 
@@ -71,7 +72,7 @@ public class EnemyScript : MonoBehaviour
 
 
         transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, 40 - drop_angle * 50, 0), step);
-        transform.LookAt(new Vector3(0,40 - drop_angle * 5 ,0));
+        transform.LookAt(new Vector3(0,40 - drop_angle * 3 ,0));
         
     }
 
