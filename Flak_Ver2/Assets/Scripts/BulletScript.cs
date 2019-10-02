@@ -10,7 +10,6 @@ public class BulletScript : MonoBehaviour
 
     GameObject gameController;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -27,11 +26,12 @@ public class BulletScript : MonoBehaviour
     {
         if (col.gameObject.tag == "EnemyTag")
         {
+
             gameController.SendMessage("IncreaseScore");
             /*spawnObject = GameObject.Find("Spawner");
             SpawnScript_BS = spawnObject.GetComponent<SpawnScript>();
             SpawnScript_BS.numberOfEnemys--;*/
-            Destroy(col.gameObject);
+            //Destroy(col.gameObject);
 
         }
         Destroy(gameObject);

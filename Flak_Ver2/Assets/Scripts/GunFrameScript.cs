@@ -11,8 +11,7 @@ public class GunFrameScript : MonoBehaviour
 
     [SerializeField]
     private float bullet_power = 100.0f;
-    [SerializeField]
-    private Transform muzzle;
+    public Transform muzzle;
     [SerializeField]
     private float rotate_speed = 15.0f;
 

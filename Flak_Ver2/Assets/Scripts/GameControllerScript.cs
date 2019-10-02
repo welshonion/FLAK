@@ -173,6 +173,8 @@ public class GameControllerScript : MonoBehaviour
 
         ScoreForRanking = score;
 
+        
+
         for (int m = 0; m < 5; m++)
         {
             if (ScoreForRanking > HighScoreSceneScript.Ranking[m])
