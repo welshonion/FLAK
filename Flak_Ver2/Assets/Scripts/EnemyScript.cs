@@ -21,6 +21,8 @@ public class EnemyScript : MonoBehaviour
     public AudioClip explosionSound;
     public AudioSource audioSource;
 
+    public float enemy_height = 31.126f;
+    
 
     // Update is called once per frame
 
@@ -71,8 +73,8 @@ public class EnemyScript : MonoBehaviour
         }
 
 
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, 40 - drop_angle * 50, 0), step);
-        transform.LookAt(new Vector3(0,40 - drop_angle * 3 ,0));
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, enemy_height - drop_angle * 50, 0), step);
+        transform.LookAt(new Vector3(0, enemy_height - drop_angle * 3 ,0));
         
     }
 

@@ -11,7 +11,7 @@ public class RaycastScript : MonoBehaviour
 
     public Image rendray;
     float[] hoge = new float[360];
-    int angleinfo_ray = 0;
+    public int angleinfo_ray = 0;
 
 
     // Start is called before the first frame update
@@ -32,13 +32,14 @@ public class RaycastScript : MonoBehaviour
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
 
-        angleinfo_ray = ((int)(transform.localEulerAngles.y) + 180) %360;
+        angleinfo_ray = ((int)(transform.localEulerAngles.y) /*+ 180*/) %360;
         //Debug.Log(angleinfo_ray);
 
 
         if (Physics.Raycast(ray, out hit, raser_distance_area))
         {
             //Debug.Log(hit.collider.gameObject.transform.position);
+            //Debug.Log(angleinfo_ray);
             //Debug.Log(hit.distance);
             hoge[angleinfo_ray] = (hit.distance / raser_distance_area) - 2.0f;
             //Debug.Log(hoge[angleinfo_ray]);
@@ -59,6 +60,6 @@ public class RaycastScript : MonoBehaviour
 
         //rendray.material.SetFloatArray("_FDIST", hoge);
 
-        Debug.DrawRay(ray.origin, ray.direction*10, Color.red, 3.0f);
+        Debug.DrawRay(ray.origin, ray.direction*1000, Color.red, 3.0f);
     }
 }

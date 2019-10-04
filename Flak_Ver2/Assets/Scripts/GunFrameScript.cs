@@ -57,11 +57,11 @@ public class GunFrameScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W) && gun_angle > -40 && StateGFS)
         {
-            transform.Rotate(-1 * rotate_speed * Time.deltaTime, 0, 0);
+            transform.Rotate(0, 0, 1 * rotate_speed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.S) && gun_angle < 10 && StateGFS)
         {
-            transform.Rotate(1 * rotate_speed * Time.deltaTime, 0, 0);
+            transform.Rotate(0, 0, -1 * rotate_speed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.J) && StateGFS && shottime > 0.1f)
@@ -83,7 +83,7 @@ public class GunFrameScript : MonoBehaviour
         //Debug.Log("shot");
         GameObject bullet_object = Resources.Load("Bullet") as GameObject;
         GameObject bullet_instance = Instantiate(bullet_object, muzzle.position, muzzle.rotation);
-        bullet_instance.transform.Rotate(firing_angle_x,firing_angle_y,0);
+        bullet_instance.transform.Rotate(0, firing_angle_y, (-1) * firing_angle_x);
         bullet_instance.GetComponent<Rigidbody>().AddForce(bullet_instance.transform.forward * bullet_power);
         Destroy(bullet_instance, 3f);
     }

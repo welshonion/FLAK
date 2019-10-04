@@ -46,7 +46,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 430822834240412049}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 055ea7b090d0297438dd3c510c61a98a, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 1
@@ -67,7 +67,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 3.7
+  m_Radius: 10.87
   m_Height: 32.4
   m_Direction: 0
   m_Center: {x: 0, y: 3.7, z: -3.01}
@@ -104,6 +104,7 @@ MonoBehaviour:
     type: 3}
   explosionSound: {fileID: 8300000, guid: 03056f1d91c31e64bafca7517758e078, type: 3}
   audioSource: {fileID: 2459902997115290325}
+  enemy_height: 67.63
 --- !u!114 &3760334532108785356
 MonoBehaviour:
   m_ObjectHideFlags: 0

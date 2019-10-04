@@ -41,7 +41,7 @@ public class RadarController : MonoBehaviour
         if (stateRC)
         {
             transform.Rotate(new Vector3(0, 1, 0));
-            angleinfo = (int)(transform.localEulerAngles.y + 181) % 360;
+            angleinfo = (int)(transform.localEulerAngles.y /*+ 181*/) % 360;
             //Debug.Log(angleinfo);
             rend.material.SetFloat("_FValue", angleinfo);
         }

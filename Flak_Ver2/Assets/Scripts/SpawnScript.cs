@@ -18,6 +18,8 @@ public class SpawnScript : MonoBehaviour
     private double spawn_x, spawn_z;
     private int spawn_angle;
 
+    public float spawn_height = 31.126f;
+
     System.Random spawn_rnd = new System.Random();
 
     // Start is called before the first frame update
@@ -58,7 +60,7 @@ public class SpawnScript : MonoBehaviour
         spawn_z = spawn_distance * Math.Sin(spawn_angle * (Math.PI / 180));
 
         GameObject spawn_object = Resources.Load("Enemy") as GameObject;
-        GameObject spawn_instance = Instantiate(spawn_object, new Vector3((float)spawn_x, 40,(float)spawn_z), Quaternion.identity, this.transform);
+        GameObject spawn_instance = Instantiate(spawn_object, new Vector3((float)spawn_x, spawn_height,(float)spawn_z), Quaternion.identity, this.transform);
         numberOfEnemys++;
         elapsedTime = 0f;
     }
