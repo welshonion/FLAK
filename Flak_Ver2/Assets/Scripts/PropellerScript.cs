@@ -35,7 +35,7 @@ public class PropellerScript : MonoBehaviour
 
         if (statePS)
         {
-            transform.Rotate(new Vector3(0, 0, -10));
+            transform.Rotate(new Vector3(0, 0, -20));
         }
 
     }

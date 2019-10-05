@@ -13,6 +13,9 @@ public class GunBaseScript : MonoBehaviour
 
     private float gun_angle=0.0f;
 
+    AudioSource motorSound;
+    bool jud_playing=false;
+
 
 
 
@@ -23,6 +26,7 @@ public class GunBaseScript : MonoBehaviour
         if (ObjectGBS != null)
         {
             ControllerGBS = ObjectGBS.GetComponent<GameControllerScript>();
+            motorSound = GetComponent<AudioSource>();
         }
         else
         {
@@ -48,6 +52,22 @@ public class GunBaseScript : MonoBehaviour
         if (Input.GetKey(KeyCode.A) && StateGBS)
         {
             transform.Rotate(0, -1 * rotate_speed * Time.deltaTime, 0);
+        }
+        
+
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)) && StateGBS && !jud_playing)
+        {
+            motorSound.loop = true;
+            motorSound.Play();
+            jud_playing = true;
+
+        }
+
+
+        if ((Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D)) && StateGBS && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+        {
+            motorSound.loop = false;
+            jud_playing = false;
         }
 
     }

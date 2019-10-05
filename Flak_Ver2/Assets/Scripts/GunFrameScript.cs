@@ -11,7 +11,7 @@ public class GunFrameScript : MonoBehaviour
 
     [SerializeField]
     private float bullet_power = 100.0f;
-    public Transform muzzle;
+    public Transform muzzle_L, muzzle_R;
     [SerializeField]
     private float rotate_speed = 15.0f;
 
@@ -25,8 +25,12 @@ public class GunFrameScript : MonoBehaviour
     AudioSource[] audioSource;
     int soundNum = 0;
 
+    float pos_x, pos_y, pos_z;
+
 
     float shottime = 0.0f;
+
+    bool jud_muzzle_is_l=true;
 
     // Start is called before the first frame update
     void Start()
@@ -57,14 +61,14 @@ public class GunFrameScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W) && gun_angle > -40 && StateGFS)
         {
-            transform.Rotate(0, 0, 1 * rotate_speed * Time.deltaTime);
+            transform.Rotate(-1 * rotate_speed * Time.deltaTime, 0, 0);
         }
         if (Input.GetKey(KeyCode.S) && gun_angle < 10 && StateGFS)
         {
-            transform.Rotate(0, 0, -1 * rotate_speed * Time.deltaTime);
+            transform.Rotate(1 * rotate_speed * Time.deltaTime, 0, 0);
         }
 
-        if (Input.GetKey(KeyCode.J) && StateGFS && shottime > 0.1f)
+        if (Input.GetKey(KeyCode.J) && StateGFS && shottime > 0.15f)
         {
             Shot();
             shottime = 0.0f;
@@ -78,13 +82,41 @@ public class GunFrameScript : MonoBehaviour
         audioSource[soundNum].PlayOneShot(machineSound);
         soundNum = (soundNum + 1) % 4;
         audioSource[soundNum].Stop();
-        firing_angle_x = ((float)(firing_rnd.Next(100)) / 50.0f) - 5.0f;
-        firing_angle_y = ((float)(firing_rnd.Next(100)) / 50.0f) - 5.0f;
+        firing_angle_x = (((float)(firing_rnd.Next(100)) / 50.0f) - 1.0f) * 2;
+        firing_angle_y = (((float)(firing_rnd.Next(100)) / 50.0f) - 1.0f) * 2;
         //Debug.Log("shot");
         GameObject bullet_object = Resources.Load("Bullet") as GameObject;
-        GameObject bullet_instance = Instantiate(bullet_object, muzzle.position, muzzle.rotation);
-        bullet_instance.transform.Rotate(0, firing_angle_y, (-1) * firing_angle_x);
+        GameObject bullet_instance;
+        if (jud_muzzle_is_l)
+        {
+            bullet_instance = Instantiate(bullet_object, muzzle_L.position, muzzle_R.rotation);
+            jud_muzzle_is_l = false;
+        }
+        else
+        {
+            bullet_instance = Instantiate(bullet_object, muzzle_R.position, muzzle_R.rotation);
+            jud_muzzle_is_l = true;
+        }
+        bullet_instance.transform.Rotate(firing_angle_x, firing_angle_y, 0);
         bullet_instance.GetComponent<Rigidbody>().AddForce(bullet_instance.transform.forward * bullet_power);
-        Destroy(bullet_instance, 3f);
+
+        float angle_x = transform.rotation.eulerAngles.x;
+        float angle_y = transform.rotation.eulerAngles.y;
+        float angle_z = transform.rotation.eulerAngles.z;
+
+        pos_x = Mathf.Cos(angle_x * (float)Math.PI / 180) * Mathf.Sin(angle_y * (float)Math.PI / 180);
+        pos_z = Mathf.Cos(angle_x + (float)Math.PI / 180) * Mathf.Cos(angle_y * (float)Math.PI / 180);
+        pos_y = Mathf.Sin(angle_x * (float)Math.PI / 180);
+
+        this.gameObject.transform.position = new Vector3(transform.position.x - 0.05f * pos_x, transform.position.y + 0.05f * pos_y, transform.position.z - 0.05f * pos_z);
+
+        Invoke("recoil", 0.05f);
+        Destroy(bullet_instance, 4f);
+    }
+
+    void recoil()
+    {
+        this.gameObject.transform.position = new Vector3(transform.position.x + 0.05f * pos_x, transform.position.y - 0.05f * pos_y, transform.position.z + 0.05f * pos_z);
+
     }
 }
