@@ -32,6 +32,9 @@ public class GunFrameScript : MonoBehaviour
 
     bool jud_muzzle_is_l=true;
 
+    public GameObject particle_flash;
+    GameObject muzzleflash;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,6 +85,7 @@ public class GunFrameScript : MonoBehaviour
         audioSource[soundNum].PlayOneShot(machineSound);
         soundNum = (soundNum + 1) % 4;
         audioSource[soundNum].Stop();
+
         firing_angle_x = (((float)(firing_rnd.Next(100)) / 50.0f) - 1.0f) * 2;
         firing_angle_y = (((float)(firing_rnd.Next(100)) / 50.0f) - 1.0f) * 2;
         //Debug.Log("shot");
@@ -89,12 +93,14 @@ public class GunFrameScript : MonoBehaviour
         GameObject bullet_instance;
         if (jud_muzzle_is_l)
         {
-            bullet_instance = Instantiate(bullet_object, muzzle_L.position, muzzle_R.rotation);
+            bullet_instance = Instantiate(bullet_object, muzzle_L.position, muzzle_L.rotation);
+            muzzleflash = Instantiate(particle_flash, muzzle_L.position, muzzle_L.rotation);
             jud_muzzle_is_l = false;
         }
         else
         {
             bullet_instance = Instantiate(bullet_object, muzzle_R.position, muzzle_R.rotation);
+            muzzleflash = Instantiate(particle_flash, muzzle_R.position, muzzle_R.rotation);
             jud_muzzle_is_l = true;
         }
         bullet_instance.transform.Rotate(firing_angle_x, firing_angle_y, 0);
@@ -111,6 +117,7 @@ public class GunFrameScript : MonoBehaviour
         this.gameObject.transform.position = new Vector3(transform.position.x - 0.05f * pos_x, transform.position.y + 0.05f * pos_y, transform.position.z - 0.05f * pos_z);
 
         Invoke("recoil", 0.05f);
+        Destroy(muzzleflash, 0.5f);
         Destroy(bullet_instance, 4f);
     }
 
