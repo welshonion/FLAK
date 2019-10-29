@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: a687a4bf255b36a4592bed1be9de2653
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Korneuburg Slab Regular
+  fontNames:
+  - Korneuburg Slab Regular
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 511edd5c0016eca4ca8e9bca248f8aa5, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
