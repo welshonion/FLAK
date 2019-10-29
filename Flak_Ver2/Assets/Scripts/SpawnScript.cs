@@ -55,7 +55,20 @@ public class SpawnScript : MonoBehaviour
     {
         //Debug.Log("Spawn");
         //spawn_angle = spawn_rnd.Next(360);
-        spawn_angle = UnityEngine.Random.Range(20, 70);
+        spawn_angle = UnityEngine.Random.Range(-180, 20);
+        //-180 -110
+        //-70 0
+        //0 70
+        //120 180
+
+        if (spawn_angle >= -100)
+        {
+            spawn_angle += 40;
+        }
+        if (spawn_angle >= 80)
+        {
+            spawn_angle += 50;
+        }
 
         spawn_x = spawn_distance * Math.Cos(spawn_angle * (Math.PI / 180));
         spawn_z = spawn_distance * Math.Sin(spawn_angle * (Math.PI / 180));

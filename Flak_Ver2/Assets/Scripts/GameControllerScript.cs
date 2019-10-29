@@ -46,7 +46,11 @@ public class GameControllerScript : MonoBehaviour
     AudioSource BGMSource;
     public AudioClip AudioStart;
 
-    bool jud_GamestartButton;
+    StopScreen stopScreen;
+    public GameObject BGMManager;
+    SoundScript soundScript;
+
+    bool jud_pause=false;
 
 
     //   public static bool stopscreen = false;
@@ -57,7 +61,9 @@ public class GameControllerScript : MonoBehaviour
     {
         Ready();
         BGMSource = GetComponent<AudioSource>();
-        jud_GamestartButton = false;
+        stopScreen = Pause.GetComponent<StopScreen>();
+        soundScript = BGMManager.GetComponent<SoundScript>();
+        jud_pause = false;
     }
 
     // Update is called once per frame
@@ -66,10 +72,9 @@ public class GameControllerScript : MonoBehaviour
         switch (state)
         {
             case State.Ready:
-                if (Input.anyKeyDown||Input.touchCount>0)
+                if (Input.anyKeyDown)
                 {
                     jud_gameover = false;
-                    jud_GamestartButton = false;
                     GameStart();
                 }
                 break;
@@ -97,8 +102,7 @@ public class GameControllerScript : MonoBehaviour
         BackGameButton.gameObject.SetActive(false);
 
         stateLabel.gameObject.SetActive(true);
-        stateLabel.text = "Press Start Button or Space Key";
-
+        stateLabel.text = "Press Any Button";
         StateGCS = false;
         TweetBool = false;
 
@@ -210,6 +214,11 @@ public class GameControllerScript : MonoBehaviour
             timer = 0;
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            push_pause();
+        }
+
         /*if (Input.GetKeyDown(KeyCode.P))
         {
             Stop();
@@ -248,14 +257,24 @@ public class GameControllerScript : MonoBehaviour
         jud_gameover = true;
     }
 
-    public void Jud_GamestartButtonOn()
+    public void push_pause()
     {
-        jud_GamestartButton = true;
+        if (jud_pause == false)
+        {
+            Stop();
+            stopScreen.Pause();
+            soundScript.DecideSound2();
+            jud_pause = true;
+        }
+        else if(jud_pause ==true)
+        {
+            Backgame();
+            stopScreen.BackPause();
+            soundScript.DecideSound1();
+            jud_pause = false;
+        }
+        
     }
 
-    public void Jud_GamestartButtonOff()
-    {
-        jud_GamestartButton = false;
-    }
 }
 
