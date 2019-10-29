@@ -7,7 +7,7 @@ public class SpawnScript : MonoBehaviour
 {
 
     [SerializeField]
-    float apperNextTime = 1.0f;
+    float apperNextTime = 3.0f;
     /*[SerializeField]
     int maxNumOfEnemys = 10;*/
 
@@ -18,7 +18,7 @@ public class SpawnScript : MonoBehaviour
     private double spawn_x, spawn_z;
     private int spawn_angle;
 
-    public float spawn_height = 31.126f;
+    public float spawn_height = 100.0f;
 
     System.Random spawn_rnd = new System.Random();
 
@@ -54,7 +54,8 @@ public class SpawnScript : MonoBehaviour
     public void SpawnEnemy()
     {
         //Debug.Log("Spawn");
-        spawn_angle = spawn_rnd.Next(360);
+        //spawn_angle = spawn_rnd.Next(360);
+        spawn_angle = UnityEngine.Random.Range(20, 70);
 
         spawn_x = spawn_distance * Math.Cos(spawn_angle * (Math.PI / 180));
         spawn_z = spawn_distance * Math.Sin(spawn_angle * (Math.PI / 180));

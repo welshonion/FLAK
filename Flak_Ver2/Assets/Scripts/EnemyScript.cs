@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
+    public GameControllerScript ControllerES;
+    public GameObject ObjectES;
+    bool StateES;
+
     public float enemy_speed = 1.0f;
 
     bool jud_gameover;
-
-    GameObject gameController;
 
     public GameObject particle_base;
     GameObject particle;
@@ -39,14 +41,14 @@ public class EnemyScript : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             //Debug.Log("over");
-            gameController.SendMessage("Jud_GameOver");
+            ObjectES.SendMessage("Jud_GameOver");
             Destroy(this.gameObject);
 
         }
 
         if(col.gameObject.name == "WaterProDaytime")
         {
-            Destroy(particle.gameObject);
+            //Destroy(particle.gameObject);
             Destroy(this.gameObject);
         }
     }
@@ -58,7 +60,16 @@ public class EnemyScript : MonoBehaviour
     {
         drop_jud = false;
         drop_angle = 0.0f;
-        gameController = GameObject.FindWithTag("GameController");
+
+        ObjectES = GameObject.Find("GameController");
+        if (ObjectES != null)
+        {
+            ControllerES = ObjectES.GetComponent<GameControllerScript>();
+        }
+        else
+        {
+            StateES = false;
+        }
 
     }
 
@@ -66,16 +77,24 @@ public class EnemyScript : MonoBehaviour
     void Update()
     {
 
-        step = enemy_speed * Time.deltaTime;
-        if(drop_jud == true)
+        if (ObjectES != null)
         {
-            drop_angle= drop_angle + Time.deltaTime * 20;
+            StateES = ControllerES.StateGCS;
         }
 
+        if (StateES)
+        {
+            step = enemy_speed * Time.deltaTime;
+            if (drop_jud == true)
+            {
+                drop_angle = drop_angle + Time.deltaTime * 20;
+            }
 
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, enemy_height - drop_angle * 50, 0), step);
-        transform.LookAt(new Vector3(0, enemy_height - drop_angle * 3 ,0));
-        
+
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, enemy_height - drop_angle * 50, 0), step);
+            transform.LookAt(new Vector3(0, enemy_height - drop_angle * 3, 0));
+        }
+   
     }
 
     /*void ApplyAngle()

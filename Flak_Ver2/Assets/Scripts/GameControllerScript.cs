@@ -46,6 +46,8 @@ public class GameControllerScript : MonoBehaviour
     AudioSource BGMSource;
     public AudioClip AudioStart;
 
+    bool jud_GamestartButton;
+
 
     //   public static bool stopscreen = false;
 
@@ -55,6 +57,7 @@ public class GameControllerScript : MonoBehaviour
     {
         Ready();
         BGMSource = GetComponent<AudioSource>();
+        jud_GamestartButton = false;
     }
 
     // Update is called once per frame
@@ -63,9 +66,10 @@ public class GameControllerScript : MonoBehaviour
         switch (state)
         {
             case State.Ready:
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.anyKeyDown||Input.touchCount>0)
                 {
                     jud_gameover = false;
+                    jud_GamestartButton = false;
                     GameStart();
                 }
                 break;
@@ -93,7 +97,7 @@ public class GameControllerScript : MonoBehaviour
         BackGameButton.gameObject.SetActive(false);
 
         stateLabel.gameObject.SetActive(true);
-        stateLabel.text = "Press Space Key";
+        stateLabel.text = "Press Start Button or Space Key";
 
         StateGCS = false;
         TweetBool = false;
@@ -242,6 +246,16 @@ public class GameControllerScript : MonoBehaviour
     public void Jud_GameOver()
     {
         jud_gameover = true;
+    }
+
+    public void Jud_GamestartButtonOn()
+    {
+        jud_GamestartButton = true;
+    }
+
+    public void Jud_GamestartButtonOff()
+    {
+        jud_GamestartButton = false;
     }
 }
 

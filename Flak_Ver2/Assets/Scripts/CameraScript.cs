@@ -8,6 +8,9 @@ public class CameraScript : MonoBehaviour
     public GameControllerScript controllerCS;
     bool stateCS;
 
+    bool jud_GunUpButton;
+    bool jud_GunDownButton;
+
     [SerializeField]
     private float rotate_speed = 15.0f;
 
@@ -25,6 +28,9 @@ public class CameraScript : MonoBehaviour
         {
             stateCS = true;
         }
+
+        jud_GunUpButton = false;
+        jud_GunDownButton = false;
     }
 
     // Update is called once per frame
@@ -40,17 +46,37 @@ public class CameraScript : MonoBehaviour
             camera_angle = transform.localEulerAngles.x;
             if (camera_angle > 180) camera_angle -= 360.0f;
 
-            if (Input.GetKey(KeyCode.W) && camera_angle > -40)
+            if ((Input.GetKey(KeyCode.W) || jud_GunUpButton) && camera_angle > -40)
             {
                 transform.Rotate(-1 * rotate_speed * Time.deltaTime, 0, 0);
                 transform.position += new Vector3(0, -0.2f * Time.deltaTime, 0);
             }
-            if (Input.GetKey(KeyCode.S) && camera_angle < 10)
+            if ((Input.GetKey(KeyCode.S) || jud_GunDownButton) && camera_angle < 10)
             {
                 transform.Rotate(1 * rotate_speed * Time.deltaTime, 0, 0);
                 transform.position += new Vector3(0, 0.2f * Time.deltaTime, 0);
             }
         }
  
+    }
+
+    public void GUPointUp()
+    {
+        jud_GunUpButton = false;
+    }
+
+    public void GUPointDown()
+    {
+        jud_GunUpButton = true;
+    }
+
+    public void GDPointUp()
+    {
+        jud_GunDownButton = false;
+    }
+
+    public void GDPointDown()
+    {
+        jud_GunDownButton = true;
     }
 }

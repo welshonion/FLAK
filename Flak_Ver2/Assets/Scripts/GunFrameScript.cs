@@ -35,6 +35,10 @@ public class GunFrameScript : MonoBehaviour
     public GameObject particle_flash;
     GameObject muzzleflash;
 
+    bool jud_GunFireButton;
+    bool jud_GunUpButton;
+    bool jud_GunDownButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +52,10 @@ public class GunFrameScript : MonoBehaviour
         {
             StateGFS = false;
         }
+
+        jud_GunFireButton = false;
+        jud_GunUpButton = false;
+        jud_GunDownButton = false;
     }
 
     // Update is called once per frame
@@ -62,16 +70,16 @@ public class GunFrameScript : MonoBehaviour
         gun_angle = transform.localEulerAngles.x;
         if (gun_angle > 180) gun_angle -= 360.0f;
 
-        if (Input.GetKey(KeyCode.W) && gun_angle > -40 && StateGFS)
+        if ((Input.GetKey(KeyCode.W)||jud_GunUpButton) && gun_angle > -40 && StateGFS)
         {
             transform.Rotate(-1 * rotate_speed * Time.deltaTime, 0, 0);
         }
-        if (Input.GetKey(KeyCode.S) && gun_angle < 10 && StateGFS)
+        if ((Input.GetKey(KeyCode.S)||jud_GunDownButton) && gun_angle < 10 && StateGFS)
         {
             transform.Rotate(1 * rotate_speed * Time.deltaTime, 0, 0);
         }
 
-        if (Input.GetKey(KeyCode.J) && StateGFS && shottime > 0.15f)
+        if ((Input.GetKey(KeyCode.J) || jud_GunFireButton )&& StateGFS && shottime > 0.15f)
         {
             Shot();
             shottime = 0.0f;
@@ -125,5 +133,35 @@ public class GunFrameScript : MonoBehaviour
     {
         this.gameObject.transform.position = new Vector3(transform.position.x + 0.05f * pos_x, transform.position.y - 0.05f * pos_y, transform.position.z + 0.05f * pos_z);
 
+    }
+
+    public void GFPointUp()
+    {
+        jud_GunFireButton = false;
+    }
+
+    public void GFPointDown()
+    {
+        jud_GunFireButton = true;
+    }
+
+    public void GUPointUp()
+    {
+        jud_GunUpButton = false;
+    }
+
+    public void GUPointDown()
+    {
+        jud_GunUpButton = true;
+    }
+
+    public void GDPointUp()
+    {
+        jud_GunDownButton = false;
+    }
+
+    public void GDPointDown()
+    {
+        jud_GunDownButton = true;
     }
 }

@@ -115,8 +115,7 @@
 				float r = distance(st, fixed2(0.5, 0.5));
 				float dist = _FDIST[rad];
 
-
-				return (step(dist + 2.0f,r) * step(r, dist + 2.05f));
+				return (step(dist + 2.0f, r) * step(r, dist + 2.05f));
 			}
 
 

@@ -72,7 +72,9 @@
      <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
      <Compile Include="Assets\Scripts\BulletScript.cs" />
      <Compile Include="Assets\Scripts\CameraScript.cs" />
+     <Compile Include="Assets\Scripts\CannonScript.cs" />
      <Compile Include="Assets\Scripts\ClearTrigger.cs" />
+     <Compile Include="Assets\Scripts\DeleteParticleScript.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\GameControllerScript.cs" />
      <Compile Include="Assets\Scripts\GunBaseScript.cs" />
