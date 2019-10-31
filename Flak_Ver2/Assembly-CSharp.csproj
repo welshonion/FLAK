@@ -76,6 +76,7 @@
      <Compile Include="Assets\Scripts\CannonScript.cs" />
      <Compile Include="Assets\Scripts\ClearTrigger.cs" />
      <Compile Include="Assets\Scripts\DeleteParticleScript.cs" />
+     <Compile Include="Assets\Scripts\DifficultLevel.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\GameControllerScript.cs" />
      <Compile Include="Assets\Scripts\GunBaseScript.cs" />
@@ -95,6 +96,7 @@
      <Compile Include="Assets\Scripts\SpawnScript.cs" />
      <Compile Include="Assets\Scripts\StopScreen.cs" />
      <Compile Include="Assets\Scripts\Title.cs" />
+     <Compile Include="Assets\Scripts\TitleHigh.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />

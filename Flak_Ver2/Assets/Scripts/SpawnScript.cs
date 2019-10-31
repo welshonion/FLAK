@@ -6,8 +6,9 @@ using UnityEngine;
 public class SpawnScript : MonoBehaviour
 {
 
-    [SerializeField]
-    float apperNextTime = 3.0f;
+    //[SerializeField]
+    float apperNextTime = 10.0f;
+    float increasetime = 0.015f;
     /*[SerializeField]
     int maxNumOfEnemys = 10;*/
 
@@ -28,13 +29,23 @@ public class SpawnScript : MonoBehaviour
         numberOfEnemys = 0;
         elapsedTime = 0f;
         SpawnEnemy();
+        if (GetComponent<DifficultLevel>().showdiffi() == 0)
+        {
+            apperNextTime = 10.0f;
+            increasetime = 0.015f;
+        }
+        else
+        {
+            apperNextTime = 5.0f;
+            increasetime = 0.03f;
+        }
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        apperNextTime -= Time.deltaTime * 0.015f;
+        apperNextTime -= Time.deltaTime * increasetime;
 
         /*if(numberOfEnemys >= maxNumOfEnemys)
         {

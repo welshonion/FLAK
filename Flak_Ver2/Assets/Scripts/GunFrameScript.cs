@@ -94,8 +94,8 @@ public class GunFrameScript : MonoBehaviour
         soundNum = (soundNum + 1) % 4;
         audioSource[soundNum].Stop();
 
-        firing_angle_x = (((float)(firing_rnd.Next(100)) / 50.0f) - 1.0f) * 2;
-        firing_angle_y = (((float)(firing_rnd.Next(100)) / 50.0f) - 1.0f) * 2;
+        firing_angle_x = (((float)(firing_rnd.Next(100)) / 50.0f) - 1.0f) * 1.5f;
+        firing_angle_y = (((float)(firing_rnd.Next(100)) / 50.0f) - 1.0f) * 1.5f;
         //Debug.Log("shot");
         GameObject bullet_object = Resources.Load("Bullet") as GameObject;
         GameObject bullet_instance;

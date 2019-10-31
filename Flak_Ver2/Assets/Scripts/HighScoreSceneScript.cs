@@ -10,6 +10,8 @@ public class HighScoreSceneScript : MonoBehaviour {
     public static int RankingNum = 5;
     public static int[] Ranking;
 
+
+
     public void Start()
     {
         getRanking();

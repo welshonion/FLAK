@@ -32,6 +32,9 @@ public class GameControllerScript : MonoBehaviour
     public GameObject Pause;
     public GameObject PauseBackGame;
     public Button BackGameButton;
+    public Image SelectCursor0;
+    public Image SelectCursor1;
+    public Image SelectCursor2;
     public bool StateGCS;//if true then move else stop
     public static bool TweetBool;
 
@@ -51,6 +54,8 @@ public class GameControllerScript : MonoBehaviour
     SoundScript soundScript;
 
     bool jud_pause=false;
+
+    int cursornum = 0;
 
 
     //   public static bool stopscreen = false;
@@ -72,7 +77,7 @@ public class GameControllerScript : MonoBehaviour
         switch (state)
         {
             case State.Ready:
-                if (Input.anyKeyDown)
+                if (Input.GetKeyDown(KeyCode.Return)||Input.touchCount>0)
                 {
                     jud_gameover = false;
                     GameStart();
@@ -100,11 +105,15 @@ public class GameControllerScript : MonoBehaviour
         scoreLabel.text = "Score : " + 0;
 
         BackGameButton.gameObject.SetActive(false);
+        SelectCursor0.gameObject.SetActive(false);
+        SelectCursor1.gameObject.SetActive(false);
+        SelectCursor2.gameObject.SetActive(false);
 
         stateLabel.gameObject.SetActive(true);
-        stateLabel.text = "Press Any Button";
+        stateLabel.text = "Press Enter Button";
         StateGCS = false;
         TweetBool = false;
+        cursornum = 0;
 
         Time.timeScale = 0;
     }
@@ -137,6 +146,7 @@ public class GameControllerScript : MonoBehaviour
             stateLabel.gameObject.SetActive(true);
             stateLabel.text = "Pause";
             BackGameButton.gameObject.SetActive(true);
+            SelectCursor0.gameObject.SetActive(true);
 
             BGMSource.Pause();
             StateGCS = false;
@@ -150,16 +160,23 @@ public class GameControllerScript : MonoBehaviour
     {
         Time.timeScale = 1;
 
+        stopScreen.BackPause();
+        soundScript.DecideSound1();
+
         BGMSource.UnPause();
         StateGCS = true;
 
         stateLabel.gameObject.SetActive(false);
         BackGameButton.gameObject.SetActive(false);
+        SelectCursor0.gameObject.SetActive(false);
+        SelectCursor1.gameObject.SetActive(false);
+        SelectCursor2.gameObject.SetActive(false);
     }
 
     public void Backtitle()
     {
         Time.timeScale = 1;
+        soundScript.DecideSound3();
         SceneManager.LoadScene("Start");
     }
 
@@ -224,6 +241,25 @@ public class GameControllerScript : MonoBehaviour
             Stop();
         }*/
 
+        if (StateGCS == false&&Input.GetKeyDown(KeyCode.I)&&state != State.Ready)
+        {
+            CursorUp();
+        }
+        if (StateGCS == false && Input.GetKeyDown(KeyCode.J) && state != State.Ready)
+        {
+            CursorDown();
+        }
+        if (StateGCS == false && Input.GetKeyDown(KeyCode.Return) && state != State.Ready)
+        {
+            CursorEnter();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            soundScript.DecideSound3();
+            Application.Quit();
+        }
+
 
     }
 
@@ -238,6 +274,8 @@ public class GameControllerScript : MonoBehaviour
     public void Retry()
     {
         Time.timeScale = 1;
+
+        soundScript.DecideSound1();
 
         Pause.gameObject.SetActive(false);
         PauseBackGame.gameObject.SetActive(false);
@@ -274,6 +312,72 @@ public class GameControllerScript : MonoBehaviour
             jud_pause = false;
         }
         
+    }
+
+    public void CursorUp()
+    {
+        if (cursornum > 0) cursornum--;
+
+        soundScript.DecideSound2();
+
+        if (cursornum == 0)
+        {
+            SelectCursor0.gameObject.SetActive(true);
+            SelectCursor1.gameObject.SetActive(false);
+            SelectCursor2.gameObject.SetActive(false);
+        }
+        else if (cursornum == 1)
+        {
+            SelectCursor0.gameObject.SetActive(false);
+            SelectCursor1.gameObject.SetActive(true);
+            SelectCursor2.gameObject.SetActive(false);
+        }
+        else if (cursornum == 2)
+        {
+            SelectCursor0.gameObject.SetActive(false);
+            SelectCursor1.gameObject.SetActive(false);
+            SelectCursor2.gameObject.SetActive(true);
+        }
+    }
+    public void CursorDown()
+    {
+        if (cursornum < 2) cursornum++;
+
+        soundScript.DecideSound2();
+
+        if (cursornum == 0)
+        {
+            SelectCursor0.gameObject.SetActive(true);
+            SelectCursor1.gameObject.SetActive(false);
+            SelectCursor2.gameObject.SetActive(false);
+        }
+        else if (cursornum == 1)
+        {
+            SelectCursor0.gameObject.SetActive(false);
+            SelectCursor1.gameObject.SetActive(true);
+            SelectCursor2.gameObject.SetActive(false);
+        }
+        else if (cursornum == 2)
+        {
+            SelectCursor0.gameObject.SetActive(false);
+            SelectCursor1.gameObject.SetActive(false);
+            SelectCursor2.gameObject.SetActive(true);
+        }
+    }
+    public void CursorEnter()
+    {
+        if (cursornum == 0)
+        {
+            Backgame();
+        }
+        else if (cursornum == 1)
+        {
+            Retry();
+        }
+        else if (cursornum == 2)
+        {
+            Backtitle();
+        }
     }
 
 }

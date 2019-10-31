@@ -30,28 +30,28 @@ public class ButtonColorScript : MonoBehaviour
         {
             wkey.Select();
         }
-        else if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             akey.Select();
         }
-        else if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
             skey.Select();
         }
-        else if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             dkey.Select();
         }
-        else if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             wkey.Select();
         }
         
-        else if (Input.GetKey(KeyCode.J))
+        if (Input.GetKey(KeyCode.J))
         {
             jkey.Select();
         }
-        else 
+        if (Input.GetKey(KeyCode.Space))
         {
             spkey.Select();
         }
