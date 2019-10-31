@@ -61,6 +61,8 @@ public class GameControllerScript : MonoBehaviour
     public static int RankingNum = 5;
     public static int[] Ranking;
 
+    public GameObject deathCamera;
+
 
     //   public static bool stopscreen = false;
 
@@ -72,6 +74,7 @@ public class GameControllerScript : MonoBehaviour
         BGMSource = GetComponent<AudioSource>();
         stopScreen = Pause.GetComponent<StopScreen>();
         soundScript = BGMManager.GetComponent<SoundScript>();
+        deathCamera.SetActive(false);
         jud_pause = false;
     }
 
@@ -191,6 +194,7 @@ public class GameControllerScript : MonoBehaviour
         ///////ScrollObject[] scrollObjects = GameObject.FindObjectsOfType<ScrollObject>();
 
         /////foreach (ScrollObject so in scrollObjects) so.enabled = false;
+        ///     
 
         StateGCS = false;
         BGMSource.Pause();
@@ -199,6 +203,9 @@ public class GameControllerScript : MonoBehaviour
         Pause.gameObject.SetActive(true);
         stateLabel.gameObject.SetActive(true);
         stateLabel.text = "GameOver";
+        SelectCursor0.gameObject.SetActive(false);
+        SelectCursor1.gameObject.SetActive(true);
+        SelectCursor2.gameObject.SetActive(false);
 
         ScoreForRanking = score;
 
@@ -401,6 +408,11 @@ public class GameControllerScript : MonoBehaviour
                 Ranking[k] = int.Parse(RankingScore[k]);
             }
         }
+    }
+
+    public void active_deathCamera()
+    {
+        deathCamera.SetActive(true);
     }
 
 }

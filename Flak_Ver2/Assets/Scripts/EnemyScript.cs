@@ -46,9 +46,12 @@ public class EnemyScript : MonoBehaviour
 
         if (col.gameObject.tag == "Player")
         {
+            GameObject bomb_object = Resources.Load("Bomb") as GameObject;
+            GameObject bomb_instance = Instantiate(bomb_object, new Vector3(this.transform.position.x, enemy_height-10.0f, this.transform.position.z), Quaternion.identity, this.transform);
+            ControllerES.active_deathCamera();
             //Debug.Log("over");
-            ObjectES.SendMessage("Jud_GameOver");
-            Destroy(this.gameObject);
+            //ObjectES.SendMessage("Jud_GameOver");
+            //Destroy(this.gameObject);
 
         }
 
