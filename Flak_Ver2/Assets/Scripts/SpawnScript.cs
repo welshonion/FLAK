@@ -21,6 +21,9 @@ public class SpawnScript : MonoBehaviour
 
     public float spawn_height = 100.0f;
 
+    public float enemy_speed = 1.0f;
+    float increase_speed = 0.0f;
+
     System.Random spawn_rnd = new System.Random();
 
     // Start is called before the first frame update
@@ -31,13 +34,17 @@ public class SpawnScript : MonoBehaviour
         SpawnEnemy();
         if (GetComponent<DifficultLevel>().showdiffi() == 0)
         {
-            apperNextTime = 10.0f;
-            increasetime = 0.015f;
+            apperNextTime = 8.0f;
+            increasetime = 0.03f;
+            enemy_speed = 30.0f;
+            increase_speed = 0.3f;
         }
         else
         {
-            apperNextTime = 5.0f;
-            increasetime = 0.03f;
+            apperNextTime = 4.0f;
+            increasetime = 0.06f;
+            enemy_speed = 50.0f;
+            increase_speed = 0.6f;
         }
 
     }
@@ -46,6 +53,7 @@ public class SpawnScript : MonoBehaviour
     void Update()
     {
         apperNextTime -= Time.deltaTime * increasetime;
+        enemy_speed += Time.deltaTime * increase_speed;
 
         /*if(numberOfEnemys >= maxNumOfEnemys)
         {
@@ -53,7 +61,7 @@ public class SpawnScript : MonoBehaviour
         }*/
         elapsedTime += Time.deltaTime;
 
-        if(elapsedTime > apperNextTime)
+        if(elapsedTime > apperNextTime && numberOfEnemys < 15)
         {
             SpawnEnemy();
             //Debug.Log(apperNextTime);
@@ -88,5 +96,10 @@ public class SpawnScript : MonoBehaviour
         GameObject spawn_instance = Instantiate(spawn_object, new Vector3((float)spawn_x, spawn_height,(float)spawn_z), Quaternion.identity, this.transform);
         numberOfEnemys++;
         elapsedTime = 0f;
+    }
+
+    public void minus()
+    {
+        numberOfEnemys--;
     }
 }

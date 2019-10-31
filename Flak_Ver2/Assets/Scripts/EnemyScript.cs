@@ -24,6 +24,9 @@ public class EnemyScript : MonoBehaviour
     public AudioSource audioSource;
 
     public float enemy_height = 31.126f;
+
+    GameObject SpawnObject;
+    SpawnScript spawnscript;
     
 
     // Update is called once per frame
@@ -31,8 +34,11 @@ public class EnemyScript : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
+        
+
         if (col.gameObject.tag == "Bullet" && drop_jud == false)
         {
+            spawnscript.minus();
             audioSource.PlayOneShot(explosionSound);
             particle = Instantiate(particle_base, transform.position, transform.rotation);
             drop_jud = true;
@@ -70,6 +76,12 @@ public class EnemyScript : MonoBehaviour
         {
             StateES = false;
         }
+
+        SpawnObject = GameObject.FindGameObjectWithTag("SpawnerTag");
+
+        spawnscript = SpawnObject.GetComponent<SpawnScript>();
+
+        enemy_speed = spawnscript.enemy_speed;
 
     }
 

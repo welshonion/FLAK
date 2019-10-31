@@ -84,12 +84,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ControllerES: {fileID: 0}
   ObjectES: {fileID: 0}
-  enemy_speed: 20
+  enemy_speed: 40
   particle_base: {fileID: 3780665023584056074, guid: 9443f897671315b43924a4d82246e08b,
     type: 3}
   explosionSound: {fileID: 8300000, guid: 03056f1d91c31e64bafca7517758e078, type: 3}
   audioSource: {fileID: 6257831399847741047}
   enemy_height: 100
+  SpawnObject: {fileID: 8249701286891548326, guid: 98207f728ca9ca44f8557dc0db561f93,
+    type: 3}
 --- !u!114 &6616266912731277434
 MonoBehaviour:
   m_ObjectHideFlags: 0

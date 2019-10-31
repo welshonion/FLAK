@@ -57,6 +57,10 @@ public class GameControllerScript : MonoBehaviour
 
     int cursornum = 0;
 
+    public static string RankingPref;
+    public static int RankingNum = 5;
+    public static int[] Ranking;
+
 
     //   public static bool stopscreen = false;
 
@@ -198,22 +202,24 @@ public class GameControllerScript : MonoBehaviour
 
         ScoreForRanking = score;
 
+        getRanking();
+
         
 
         for (int m = 0; m < 5; m++)
         {
-            if (ScoreForRanking > HighScoreSceneScript.Ranking[m])
+            if (ScoreForRanking > Ranking[m])
             {
-                ScoreForRankingTmp = HighScoreSceneScript.Ranking[m];
+                ScoreForRankingTmp = Ranking[m];
 
-                HighScoreSceneScript.Ranking[m] = ScoreForRanking;
+                Ranking[m] = ScoreForRanking;
 
                 ScoreForRanking = ScoreForRankingTmp;
             }
 
         }
 
-        PlayerPrefs.SetString(HighScoreSceneScript.RankingPref, HighScoreSceneScript.Ranking[0].ToString() + "," + HighScoreSceneScript.Ranking[1].ToString() + "," + HighScoreSceneScript.Ranking[2].ToString() + "," + HighScoreSceneScript.Ranking[3].ToString() + "," + HighScoreSceneScript.Ranking[4].ToString());
+        PlayerPrefs.SetString(RankingPref, Ranking[0].ToString() + "," + Ranking[1].ToString() + "," + Ranking[2].ToString() + "," + Ranking[3].ToString() + "," + Ranking[4].ToString());
 
         Invoke("Backtitle", 20.0f);
     }
@@ -231,7 +237,7 @@ public class GameControllerScript : MonoBehaviour
             timer = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && state != State.Ready)
         {
             push_pause();
         }
@@ -377,6 +383,23 @@ public class GameControllerScript : MonoBehaviour
         else if (cursornum == 2)
         {
             Backtitle();
+        }
+    }
+
+    void getRanking()
+    {
+        string originalRanking = PlayerPrefs.GetString(RankingPref, "0,0,0,0,0");
+
+        if (originalRanking.Length > 0)
+        {
+            string[] RankingScore = originalRanking.Split(","[0]);
+
+            Ranking = new int[RankingNum];
+
+            for (int k = 0; k < originalRanking.Length && k < RankingNum; k++)
+            {
+                Ranking[k] = int.Parse(RankingScore[k]);
+            }
         }
     }
 
