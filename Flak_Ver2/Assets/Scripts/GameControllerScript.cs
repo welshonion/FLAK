@@ -199,6 +199,7 @@ public class GameControllerScript : MonoBehaviour
         StateGCS = false;
         BGMSource.Pause();
         TweetBool = true;
+        cursornum = 1;
 
         Pause.gameObject.SetActive(true);
         stateLabel.gameObject.SetActive(true);
@@ -379,7 +380,7 @@ public class GameControllerScript : MonoBehaviour
     }
     public void CursorEnter()
     {
-        if (cursornum == 0)
+        if (cursornum == 0&&state != State.GameOver)
         {
             Backgame();
         }

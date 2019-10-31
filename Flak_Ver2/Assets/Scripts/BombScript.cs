@@ -13,7 +13,9 @@ public class BombScript : MonoBehaviour
     public AudioClip explosionSound;
     public AudioSource audioSource;
 
-    void OnCollisionEnter(Collision col)
+    float step;
+
+    /*void OnCollisionEnter(Collision col)
     {
 
 
@@ -28,7 +30,7 @@ public class BombScript : MonoBehaviour
 
         }
 
-    }
+    }*/
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,20 @@ public class BombScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        step = 30.0f * Time.deltaTime;
+
+
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, 0, 0), step);
+        transform.LookAt(new Vector3(0, 0, 0));
+
+        if (this.transform.position.y < 10.0f)
+        {
+            audioSource.PlayOneShot(explosionSound);
+            particle = Instantiate(particle_base, transform.position, transform.rotation);
+
+
+            ObjectES.SendMessage("Jud_GameOver");
+            Invoke("Destroy(this.gameObject)",1.0f);
+        }
     }
 }

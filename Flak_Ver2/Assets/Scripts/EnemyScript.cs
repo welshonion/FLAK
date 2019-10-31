@@ -46,11 +46,14 @@ public class EnemyScript : MonoBehaviour
 
         if (col.gameObject.tag == "Player")
         {
-            GameObject bomb_object = Resources.Load("Bomb") as GameObject;
-            GameObject bomb_instance = Instantiate(bomb_object, new Vector3(this.transform.position.x, enemy_height-10.0f, this.transform.position.z), Quaternion.identity, this.transform);
+            //GameObject bomb_object = Resources.Load("Bomb") as GameObject;
+            //GameObject bomb_instance = Instantiate(bomb_object, new Vector3(this.transform.position.x, enemy_height-10.0f, this.transform.position.z), Quaternion.identity, this.transform);
             ControllerES.active_deathCamera();
+            audioSource.PlayOneShot(explosionSound);
+            particle = Instantiate(particle_base, new Vector3(0,35.0f,0), transform.rotation);
             //Debug.Log("over");
-            //ObjectES.SendMessage("Jud_GameOver");
+            Invoke("Send_GameOver", 0.5f);
+            
             //Destroy(this.gameObject);
 
         }
@@ -132,4 +135,9 @@ public class EnemyScript : MonoBehaviour
         sprite.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, angle);
 
     }*/
+
+    public void Send_GameOver()
+    {
+        ObjectES.SendMessage("Jud_GameOver");
+    }
 }
