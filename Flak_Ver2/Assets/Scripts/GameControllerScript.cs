@@ -344,8 +344,8 @@ public class GameControllerScript : MonoBehaviour
 
         PlayerPrefs.SetString(RankingPref, Ranking[0].ToString() + "," + Ranking[1].ToString() + "," + Ranking[2].ToString() + "," + Ranking[3].ToString() + "," + Ranking[4].ToString());
 
+        score = 0;
     }
-
 
     public void active_deathCamera()
     {

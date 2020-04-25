@@ -34,16 +34,16 @@ public class SpawnScript : MonoBehaviour
         SpawnEnemy();
         if (GetComponent<DifficultLevelScript>().showdiffi() == 0)
         {
-            apperNextTime = 8.0f;
-            increasetime = 0.03f;
-            enemy_speed = 30.0f;
-            increase_speed = 0.3f;
+            apperNextTime = 10.0f;
+            increasetime = 0.04f;
+            enemy_speed = 25.0f;
+            increase_speed = 0.2f;
         }
         else
         {
-            apperNextTime = 4.0f;
+            apperNextTime = 5.0f;
             increasetime = 0.06f;
-            enemy_speed = 50.0f;
+            enemy_speed = 40.0f;
             increase_speed = 0.6f;
         }
 
