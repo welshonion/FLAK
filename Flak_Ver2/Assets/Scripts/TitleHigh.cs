@@ -8,7 +8,7 @@ public class TitleHigh : MonoBehaviour
 {
 
     public GameObject BGMManager;
-    SoundScriptStart soundScript;
+    SoundScript soundScript;
 
     public Image SelectCursor0;
 
@@ -19,7 +19,7 @@ public class TitleHigh : MonoBehaviour
     {
         string originalRankingTitle = PlayerPrefs.GetString(HighScoreSceneScript.RankingPref, "0,0,0,0,0");
 
-        soundScript = BGMManager.GetComponent<SoundScriptStart>();
+        soundScript = BGMManager.GetComponent<SoundScript>();
 
 
         SelectCursor0.gameObject.SetActive(true);

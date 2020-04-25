@@ -10,7 +10,7 @@ public class SoundScript : MonoBehaviour {
     public AudioClip Decide2;
     public AudioClip Decide3;
 
-    public bool DontDestroyEnabled = true;
+    bool DontDestroyEnabled = true;
 
     // Use this for initialization
     void Start () {

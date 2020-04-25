@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    public GameObject objectCS;
-    public GameControllerScript controllerCS;
-    bool stateCS;
+    //ForGameState***ReadOnly***
+    GameObject gameController;
+    GameControllerScript gameControllerScript;
+    public State state;
 
     bool jud_GunUpButton;
     bool jud_GunDownButton;
@@ -19,14 +20,14 @@ public class CameraScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        objectCS = GameObject.Find("GameController");
-        if (objectCS != null)
+        gameController = GameObject.FindWithTag("GameController");
+        if (gameController != null)
         {
-            controllerCS = objectCS.GetComponent<GameControllerScript>();
+            gameControllerScript = gameController.GetComponent<GameControllerScript>();
         }
         else
         {
-            stateCS = true;
+            state = State.Ready;
         }
 
         jud_GunUpButton = false;
@@ -36,12 +37,12 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (objectCS != null)
+        if (gameController != null)
         {
-            stateCS = controllerCS.StateGCS;
+            state = gameControllerScript.state;
         }
 
-        if (stateCS)
+        if (state == State.Play)
         {
             camera_angle = transform.localEulerAngles.x;
             if (camera_angle > 180) camera_angle -= 360.0f;

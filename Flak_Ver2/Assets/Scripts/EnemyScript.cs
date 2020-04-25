@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    public GameControllerScript ControllerES;
-    public GameObject ObjectES;
-    bool StateES;
+    //ForGameState***ReadOnly***
+    GameObject gameController;
+    GameControllerScript gameControllerScript;
+    public State state;
 
     public float enemy_speed = 1.0f;
 
@@ -42,13 +43,14 @@ public class EnemyScript : MonoBehaviour
             audioSource.PlayOneShot(explosionSound);
             particle = Instantiate(particle_base, transform.position, transform.rotation);
             drop_jud = true;
+            gameController.SendMessage("IncreaseScore");
         }
 
         if (col.gameObject.tag == "Player")
         {
             //GameObject bomb_object = Resources.Load("Bomb") as GameObject;
             //GameObject bomb_instance = Instantiate(bomb_object, new Vector3(this.transform.position.x, enemy_height-10.0f, this.transform.position.z), Quaternion.identity, this.transform);
-            ControllerES.active_deathCamera();
+            gameControllerScript.active_deathCamera();
             audioSource.PlayOneShot(explosionSound);
             particle = Instantiate(particle_base, new Vector3(0,35.0f,0), transform.rotation);
             //Debug.Log("over");
@@ -73,14 +75,14 @@ public class EnemyScript : MonoBehaviour
         drop_jud = false;
         drop_angle = 0.0f;
 
-        ObjectES = GameObject.Find("GameController");
-        if (ObjectES != null)
+        gameController = GameObject.FindWithTag("GameController");
+        if (gameController != null)
         {
-            ControllerES = ObjectES.GetComponent<GameControllerScript>();
+            gameControllerScript = gameController.GetComponent<GameControllerScript>();
         }
         else
         {
-            StateES = false;
+            state = State.Ready;
         }
 
         SpawnObject = GameObject.FindGameObjectWithTag("SpawnerTag");
@@ -95,12 +97,12 @@ public class EnemyScript : MonoBehaviour
     void Update()
     {
 
-        if (ObjectES != null)
+        if (gameController != null)
         {
-            StateES = ControllerES.StateGCS;
+            state = gameControllerScript.state;
         }
 
-        if (StateES)
+        if (state == State.Play)
         {
             step = enemy_speed * Time.deltaTime;
             if (drop_jud == true)
@@ -138,6 +140,6 @@ public class EnemyScript : MonoBehaviour
 
     public void Send_GameOver()
     {
-        ObjectES.SendMessage("Jud_GameOver");
+        gameController.SendMessage("Jud_GameOver");
     }
 }

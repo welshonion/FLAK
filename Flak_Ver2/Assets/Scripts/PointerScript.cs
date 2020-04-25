@@ -17,6 +17,6 @@ public class PointerScript : MonoBehaviour
     void Update()
     {
         tekubi = gunBase.transform.localEulerAngles.y;
-        transform.localRotation = Quaternion.Euler(0, 0, -1*tekubi);
+        transform.localRotation = Quaternion.Euler(0, 0, -1 * tekubi);
     }
 }

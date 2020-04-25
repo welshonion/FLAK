@@ -32,7 +32,7 @@ public class SpawnScript : MonoBehaviour
         numberOfEnemys = 0;
         elapsedTime = 0f;
         SpawnEnemy();
-        if (GetComponent<DifficultLevel>().showdiffi() == 0)
+        if (GetComponent<DifficultLevelScript>().showdiffi() == 0)
         {
             apperNextTime = 8.0f;
             increasetime = 0.03f;

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DifficultLevel : MonoBehaviour
+public class DifficultLevelScript : MonoBehaviour
 {
-    public static int difficultnum=0; 
+    public static int difficultnum = 0; 
 
     // Start is called before the first frame update
     void Start()

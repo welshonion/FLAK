@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StopScreen : MonoBehaviour {
+public class WindowActiveScript: MonoBehaviour {
 
     // Use this for initialization
     void Start () {
@@ -14,12 +14,12 @@ public class StopScreen : MonoBehaviour {
 
     }
     
-    public void Pause()
+    public void Active()
     {
         gameObject.SetActive(true);
     }
 
-    public void BackPause()
+    public void Hidden()
     {
         gameObject.SetActive(false);
     }

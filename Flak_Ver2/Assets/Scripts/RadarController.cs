@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class RadarController : MonoBehaviour
 {
-    public GameObject objectRC;
-    public GameControllerScript controllerRC;
-    bool stateRC;
+    //ForGameState***ReadOnly***
+    GameObject gameController;
+    GameControllerScript gameControllerScript;
+    public State state;
 
     public Image rend;
     float angleinfo = 0;
@@ -18,14 +19,14 @@ public class RadarController : MonoBehaviour
     {
         rend = GameObject.Find("RadarImage").GetComponent<Image>();
 
-        objectRC = GameObject.Find("GameController");
-        if (objectRC != null)
+        gameController = GameObject.FindWithTag("GameController");
+        if (gameController != null)
         {
-            controllerRC = objectRC.GetComponent<GameControllerScript>();
+            gameControllerScript = gameController.GetComponent<GameControllerScript>();
         }
         else
         {
-            stateRC = true;
+            state = State.Ready;
         }
 
     }
@@ -33,12 +34,12 @@ public class RadarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (objectRC != null)
+        if (gameController != null)
         {
-            stateRC = controllerRC.StateGCS;
+            state = gameControllerScript.state;
         }
 
-        if (stateRC)
+        if (state == State.Play)
         {
             transform.Rotate(new Vector3(0, 1, 0));
             angleinfo = (int)(transform.localEulerAngles.y /*+ 181*/) % 360;

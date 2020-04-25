@@ -5,22 +5,23 @@ using UnityEngine.UI;
 
 public class PropellerScript : MonoBehaviour
 {
-    public GameObject objectPS;
-    public GameControllerScript controllerPS;
-    bool statePS;
+    //ForGameState***ReadOnly***
+    GameObject gameController;
+    GameControllerScript gameControllerScript;
+    public State state;
 
     // Start is called before the first frame update
     void Start()
     {
 
-        objectPS = GameObject.Find("GameController");
-        if (objectPS != null)
+        gameController = GameObject.FindWithTag("GameController");
+        if (gameController != null)
         {
-            controllerPS = objectPS.GetComponent<GameControllerScript>();
+            gameControllerScript = gameController.GetComponent<GameControllerScript>();
         }
         else
         {
-            statePS = true;
+            state = State.Ready;
         }
 
     }
@@ -28,12 +29,12 @@ public class PropellerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (objectPS != null)
+        if (gameController != null)
         {
-            statePS = controllerPS.StateGCS;
+            state = gameControllerScript.state;
         }
 
-        if (statePS)
+        if (state == State.Play)
         {
             transform.Rotate(new Vector3(0, 0, -20));
         }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BombScript : MonoBehaviour
 {
-    public GameControllerScript ControllerES;
-    public GameObject ObjectES;
+    GameObject gameController;
+    GameControllerScript gameControllerScript;
 
     public GameObject particle_base;
     GameObject particle;
@@ -25,7 +25,7 @@ public class BombScript : MonoBehaviour
             particle = Instantiate(particle_base, transform.position, transform.rotation);
             
            
-            ObjectES.SendMessage("Jud_GameOver");
+            gameController.SendMessage("Jud_GameOver");
             //Destroy(this.gameObject);
 
         }
@@ -35,10 +35,10 @@ public class BombScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ObjectES = GameObject.Find("GameController");
-        if (ObjectES != null)
+        gameController = GameObject.Find("GameController");
+        if (gameController != null)
         {
-            ControllerES = ObjectES.GetComponent<GameControllerScript>();
+            gameControllerScript = gameController.GetComponent<GameControllerScript>();
         }
     }
 
@@ -57,7 +57,7 @@ public class BombScript : MonoBehaviour
             particle = Instantiate(particle_base, transform.position, transform.rotation);
 
 
-            ObjectES.SendMessage("Jud_GameOver");
+            gameController.SendMessage("Jud_GameOver");
             Invoke("Destroy(this.gameObject)",1.0f);
         }
     }

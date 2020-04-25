@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class GunFrameScript : MonoBehaviour
 {
-    public GameControllerScript ControllerGFS;
-    public GameObject ObjectGFS;
-    bool StateGFS;
+    //ForGameState***ReadOnly***
+    GameObject gameController;
+    GameControllerScript gameControllerScript;
+    public State state;
 
     [SerializeField]
     private float bullet_power = 100.0f;
@@ -42,16 +43,17 @@ public class GunFrameScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ObjectGFS = GameObject.Find("GameController");
-        if (ObjectGFS != null)
+        gameController = GameObject.FindWithTag("GameController");
+        if (gameController != null)
         {
-            ControllerGFS = ObjectGFS.GetComponent<GameControllerScript>();
-            audioSource = GetComponents<AudioSource>();
+            gameControllerScript = gameController.GetComponent<GameControllerScript>();
         }
         else
         {
-            StateGFS = false;
+            state = State.Ready;
         }
+
+        audioSource = GetComponents<AudioSource>();
 
         jud_GunFireButton = false;
         jud_GunUpButton = false;
@@ -63,23 +65,24 @@ public class GunFrameScript : MonoBehaviour
     {
         shottime += Time.deltaTime;
 
-        if (ObjectGFS != null)
+        if (gameController != null)
         {
-            StateGFS = ControllerGFS.StateGCS;
+            state = gameControllerScript.state;
         }
+
         gun_angle = transform.localEulerAngles.x;
         if (gun_angle > 180) gun_angle -= 360.0f;
 
-        if ((Input.GetKey(KeyCode.W)||jud_GunUpButton) && gun_angle > -40 && StateGFS)
+        if ((Input.GetKey(KeyCode.W)||jud_GunUpButton) && gun_angle > -40 && state == State.Play)
         {
             transform.Rotate(-1 * rotate_speed * Time.deltaTime, 0, 0);
         }
-        if ((Input.GetKey(KeyCode.S)||jud_GunDownButton) && gun_angle < 10 && StateGFS)
+        if ((Input.GetKey(KeyCode.S)||jud_GunDownButton) && gun_angle < 10 && state == State.Play)
         {
             transform.Rotate(1 * rotate_speed * Time.deltaTime, 0, 0);
         }
 
-        if ((Input.GetKey(KeyCode.J) || jud_GunFireButton )&& StateGFS && shottime > 0.15f)
+        if ((Input.GetKey(KeyCode.J) || jud_GunFireButton )&& state == State.Play && shottime > 0.15f)
         {
             Shot();
             shottime = 0.0f;

@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class GunBaseScript : MonoBehaviour
 {
-    public GameControllerScript ControllerGBS;
-    public GameObject ObjectGBS;
-    bool StateGBS;
+    //ForGameState***ReadOnly***
+    GameObject gameController;
+    GameControllerScript gameControllerScript;
+    public State state;
 
     [SerializeField]
     private float rotate_speed = 15.0f;
@@ -25,16 +26,18 @@ public class GunBaseScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ObjectGBS = GameObject.Find("GameController");
-        if (ObjectGBS != null)
+        gameController = GameObject.FindWithTag("GameController");
+        if (gameController != null)
         {
-            ControllerGBS = ObjectGBS.GetComponent<GameControllerScript>();
+            gameControllerScript = gameController.GetComponent<GameControllerScript>();
             motorSound = GetComponent<AudioSource>();
         }
         else
         {
-            StateGBS = false;
+            state = State.Ready;
         }
+
+        motorSound = GetComponent<AudioSource>();
 
         jud_GunRightButton = false;
         jud_GunLeftButton = false;
@@ -43,25 +46,25 @@ public class GunBaseScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(ObjectGBS != null)
+        if(gameController != null)
         {
-            StateGBS = ControllerGBS.StateGCS;
+            state = gameControllerScript.state;
         }
 
         gun_angle = transform.localEulerAngles.x;
         if (gun_angle > 180) gun_angle -= 360.0f;
 
-        if ((Input.GetKey(KeyCode.D) || jud_GunRightButton) && StateGBS)
+        if ((Input.GetKey(KeyCode.D) || jud_GunRightButton) && state == State.Play)
         {
             transform.Rotate(0, rotate_speed * Time.deltaTime, 0);
         }
-        if ((Input.GetKey(KeyCode.A) || jud_GunLeftButton) && StateGBS)
+        if ((Input.GetKey(KeyCode.A) || jud_GunLeftButton) && state == State.Play)
         {
             transform.Rotate(0, -1 * rotate_speed * Time.deltaTime, 0);
         }
         
 
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)) && StateGBS && !jud_playing)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)) && state == State.Play && !jud_playing)
         {
             motorSound.loop = true;
             motorSound.Play();
@@ -70,7 +73,7 @@ public class GunBaseScript : MonoBehaviour
         }
 
 
-        if ((Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D)) && StateGBS && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+        if ((Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D)) && state == State.Play && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
         {
             motorSound.loop = false;
             jud_playing = false;

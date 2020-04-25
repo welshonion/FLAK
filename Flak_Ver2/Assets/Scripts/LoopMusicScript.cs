@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class LoopMusicScript : MonoBehaviour {
 
-    public GameControllerScript ControllerLMS;
-    public GameObject ObjectLMS;
-    bool StateLMS;
+    //ForGameState***ReadOnly***
+    GameObject gameController;
+    GameControllerScript gameControllerScript;
+    public State state;
 
     AudioSource LoopSource;
 
@@ -24,14 +25,14 @@ public class LoopMusicScript : MonoBehaviour {
 
         HumanStateLMS = false;
 
-        ObjectLMS = GameObject.Find("GameController");
-        if (ObjectLMS != null)
+        gameController = GameObject.FindWithTag("GameController");
+        if (gameController != null)
         {
-            ControllerLMS = ObjectLMS.GetComponent<GameControllerScript>();
+            gameControllerScript = gameController.GetComponent<GameControllerScript>();
         }
         else
         {
-            StateLMS = false;
+            state = State.Ready;
         }
 
     }
@@ -39,9 +40,9 @@ public class LoopMusicScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (ObjectLMS != null)
+        if (gameController != null)
         {
-            StateLMS = ControllerLMS.StateGCS;
+            state = gameControllerScript.state;
         }
         BGMDelay += Time.deltaTime;
 
@@ -55,7 +56,13 @@ public class LoopMusicScript : MonoBehaviour {
         }
 
 
-        if (StateLMS == false)
+        if (state == State.Play)
+        {
+            LoopUnpause();
+        }
+
+
+        if (state != State.Play)
         {
             LoopPause();
 

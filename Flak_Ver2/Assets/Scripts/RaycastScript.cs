@@ -36,6 +36,7 @@ public class RaycastScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //案：自分の座標をenemyがどこかに格納ししとく。ここではそれを検索するだけ
 
         enemyObjects = GameObject.FindGameObjectsWithTag("EnemyTag");
 

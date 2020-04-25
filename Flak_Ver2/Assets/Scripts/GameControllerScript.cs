@@ -4,246 +4,79 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
+public enum State
+{
+    Ready = 0,
+    Play = 1,
+    Pause = 2,
+    GameOver = 3
+}
+
 public class GameControllerScript : MonoBehaviour
 {
-
-
-    GameObject[] tagObjects;
-    float timer = 0.0f;
-    float interval = 2.0f;
-
-
-
-    public enum State
+    //ForGameState
+    /*public enum State
     {
         Ready,
         Play,
+        Pause,
         GameOver
-    }
+    }*/
 
     public State state;
-    int score;
-
-    //public HumanController human;
-    ///public GameObject blocks;
-    public EnemyScript enemy;
-    public Text scoreLabel;
-    public Text stateLabel;
-    public GameObject Pause;
-    public GameObject PauseBackGame;
-    public Button BackGameButton;
-    public Image SelectCursor0;
-    public Image SelectCursor1;
-    public Image SelectCursor2;
-    public bool StateGCS;//if true then move else stop
-    public static bool TweetBool;
-
-    int ScoreSpace;
-    int ScoreForRanking;
-    int ScoreForRankingTmp;
 
     bool jud_gameover;
 
+    public bool jud_pause = false;
 
-    //Hassyaon
+    public GameObject deathCamera;
+
+
+    //ForPlayingBGM
     AudioSource BGMSource;
-    public AudioClip AudioStart;
+    public AudioClip bgm;
 
-    StopScreen stopScreen;
-    public GameObject BGMManager;
-    SoundScript soundScript;
-
-    bool jud_pause=false;
+    //UI related Objects
+    public GameObject window;
+    WindowActiveScript windowActiveScript;
+    public Text scoreLabel;
+    public Text stateLabel;
+    public Button BackGameButton;
 
     int cursornum = 0;
+
+    public Image[] SelectCursor;
+
+    //ForScore
+    int score;
+    int scoreForRanking;
+    int scoreForRankingTmp;
 
     public static string RankingPref;
     public static int RankingNum = 5;
     public static int[] Ranking;
 
-    public GameObject deathCamera;
+    //ForSound
+    public GameObject SoundManager;
+    SoundScript soundScript;
 
-
-    //   public static bool stopscreen = false;
+    //   public static bool windowActiveScript = false;
 
     // Use this for initialization
     // Start is called before the first frame update
     void Start()
     {
-        Ready();
         BGMSource = GetComponent<AudioSource>();
-        stopScreen = Pause.GetComponent<StopScreen>();
-        soundScript = BGMManager.GetComponent<SoundScript>();
+        windowActiveScript = window.GetComponent<WindowActiveScript>();
+        soundScript = SoundManager.GetComponent<SoundScript>();
         deathCamera.SetActive(false);
-        jud_pause = false;
+        Ready();
     }
-
-    // Update is called once per frame
-    void LateUpdate()
-    {
-        switch (state)
-        {
-            case State.Ready:
-                if (Input.GetKeyDown(KeyCode.Return)||Input.touchCount>0)
-                {
-                    jud_gameover = false;
-                    GameStart();
-                }
-                break;
-            case State.Play:
-                if (jud_gameover)
-                {
-                    Debug.Log("switch_gameover");
-                    GameOver();
-                }
-                break;
-
-        }
-
-    }
-
-    void Ready()
-    {
-        state = State.Ready;
-
-        ////////human.SetSteerActive(false);
-        //       blocks.SetActive(false);
-
-        scoreLabel.text = "Score : " + 0;
-
-        BackGameButton.gameObject.SetActive(false);
-        SelectCursor0.gameObject.SetActive(false);
-        SelectCursor1.gameObject.SetActive(false);
-        SelectCursor2.gameObject.SetActive(false);
-
-        stateLabel.gameObject.SetActive(true);
-        stateLabel.text = "Press Enter Button";
-        StateGCS = false;
-        TweetBool = false;
-        cursornum = 0;
-
-        Time.timeScale = 0;
-    }
-
-    void GameStart()
-    {
-        state = State.Play;
-
-        Time.timeScale = 1;
-
-        //////human.SetSteerActive(true);
-        //        blocks.SetActive(true);
-
-        //BGMSource.PlayOneShot(AudioStart);
-
-        stateLabel.gameObject.SetActive(false);
-        stateLabel.text = "";
-
-        StateGCS = true;
-    }
-
-    public void Stop()
-    {
-        if (state == State.GameOver)
-        {
-            Retry();
-        }
-        else
-        {
-            stateLabel.gameObject.SetActive(true);
-            stateLabel.text = "Pause";
-            BackGameButton.gameObject.SetActive(true);
-            SelectCursor0.gameObject.SetActive(true);
-
-            BGMSource.Pause();
-            StateGCS = false;
-
-            Time.timeScale = 0;
-        }
-
-    }
-
-    public void Backgame()
-    {
-        Time.timeScale = 1;
-
-        stopScreen.BackPause();
-        soundScript.DecideSound1();
-
-        BGMSource.UnPause();
-        StateGCS = true;
-
-        stateLabel.gameObject.SetActive(false);
-        BackGameButton.gameObject.SetActive(false);
-        SelectCursor0.gameObject.SetActive(false);
-        SelectCursor1.gameObject.SetActive(false);
-        SelectCursor2.gameObject.SetActive(false);
-    }
-
-    public void Backtitle()
-    {
-        Time.timeScale = 1;
-        soundScript.DecideSound3();
-        SceneManager.LoadScene("Start");
-    }
-
-    void GameOver()
-    {
-        state = State.GameOver;
-
-        ///////ScrollObject[] scrollObjects = GameObject.FindObjectsOfType<ScrollObject>();
-
-        /////foreach (ScrollObject so in scrollObjects) so.enabled = false;
-        ///     
-
-        StateGCS = false;
-        BGMSource.Pause();
-        TweetBool = true;
-        cursornum = 1;
-
-        Pause.gameObject.SetActive(true);
-        stateLabel.gameObject.SetActive(true);
-        stateLabel.text = "GameOver";
-        SelectCursor0.gameObject.SetActive(false);
-        SelectCursor1.gameObject.SetActive(true);
-        SelectCursor2.gameObject.SetActive(false);
-
-        ScoreForRanking = score;
-
-        getRanking();
-
-        
-
-        for (int m = 0; m < 5; m++)
-        {
-            if (ScoreForRanking > Ranking[m])
-            {
-                ScoreForRankingTmp = Ranking[m];
-
-                Ranking[m] = ScoreForRanking;
-
-                ScoreForRanking = ScoreForRankingTmp;
-            }
-
-        }
-
-        PlayerPrefs.SetString(RankingPref, Ranking[0].ToString() + "," + Ranking[1].ToString() + "," + Ranking[2].ToString() + "," + Ranking[3].ToString() + "," + Ranking[4].ToString());
-
-        Invoke("Backtitle", 20.0f);
-    }
-
-    
-
 
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > interval)
-        {
-            Check("EnemyTag");
-            timer = 0;
-        }
 
         if (Input.GetKeyDown(KeyCode.Space) && state != State.Ready)
         {
@@ -255,15 +88,15 @@ public class GameControllerScript : MonoBehaviour
             Stop();
         }*/
 
-        if (StateGCS == false&&Input.GetKeyDown(KeyCode.I)&&state != State.Ready)
+        if ((state == State.Pause || state == State.GameOver) && Input.GetKeyDown(KeyCode.I))
         {
             CursorUp();
         }
-        if (StateGCS == false && Input.GetKeyDown(KeyCode.J) && state != State.Ready)
+        if ((state == State.Pause || state == State.GameOver) && Input.GetKeyDown(KeyCode.J))
         {
             CursorDown();
         }
-        if (StateGCS == false && Input.GetKeyDown(KeyCode.Return) && state != State.Ready)
+        if ((state == State.Pause || state == State.GameOver) && Input.GetKeyDown(KeyCode.Return))
         {
             CursorEnter();
         }
@@ -277,12 +110,148 @@ public class GameControllerScript : MonoBehaviour
 
     }
 
-
-    void Check(string tagname)
+        // Update is called once per frame
+    void LateUpdate()
     {
-        tagObjects = GameObject.FindGameObjectsWithTag(tagname);
-        //Debug.Log(tagObjects.Length);
+        switch (state)
+        {
+            case State.Ready:
+                if (Input.GetKeyDown(KeyCode.Return)||Input.touchCount>0)
+                {
+                    jud_gameover = false;
+                    Play();
+                }
+                break;
+            case State.Play:
+                if (jud_gameover)
+                {
+                    //Debug.Log("switch_gameover");
+                    GameOver();
+                }
+                break;
+        }
 
+    }
+
+    void Ready()
+    {
+        state = State.Ready;
+
+        scoreLabel.text = "Score : " + 0;
+
+        BackGameButton.gameObject.SetActive(false);
+        SelectCursor[0].gameObject.SetActive(false);
+        SelectCursor[1].gameObject.SetActive(false);
+        SelectCursor[2].gameObject.SetActive(false);
+
+        stateLabel.gameObject.SetActive(true);
+        stateLabel.text = "Press Enter Button";
+        cursornum = 0;
+
+        Time.timeScale = 0;
+    }
+
+    void Play()
+    {
+        state = State.Play;
+
+        Time.timeScale = 1;
+
+        //BGMSource.PlayOneShot(bgm);
+
+        stateLabel.gameObject.SetActive(false);
+        stateLabel.text = "";
+    }
+
+    public void Pause()
+    {
+        if (state == State.GameOver)
+        {
+            Retry();
+        }
+        else
+        {
+            state = State.Pause;
+
+            stateLabel.gameObject.SetActive(true);
+            stateLabel.text = "Pause";
+            BackGameButton.gameObject.SetActive(true);
+            SelectCursor[0].gameObject.SetActive(true);
+
+            BGMSource.Pause();
+
+            Time.timeScale = 0;
+        }
+
+    }
+
+    public void push_pause()
+    {
+        if (state == State.Play)
+        {
+            windowActiveScript.Active();
+            soundScript.DecideSound2();
+            Pause();
+        }
+        else
+        {
+            windowActiveScript.Hidden();
+            soundScript.DecideSound1();
+            Backgame();
+        }
+
+    }
+
+    public void Backgame()
+    {
+        state = State.Play;
+
+        Time.timeScale = 1;
+
+        windowActiveScript.Hidden();
+        soundScript.DecideSound1();
+
+        BGMSource.UnPause();
+
+        stateLabel.gameObject.SetActive(false);
+        BackGameButton.gameObject.SetActive(false);
+        SelectCursor[0].gameObject.SetActive(false);
+        SelectCursor[1].gameObject.SetActive(false);
+        SelectCursor[2].gameObject.SetActive(false);
+    }
+
+    public void Backtitle()
+    {
+        Time.timeScale = 1;
+        soundScript.DecideSound3();
+        getRanking();
+        setRanking();
+        SceneManager.LoadScene("Start");
+    }
+
+    void GameOver()
+    {
+        state = State.GameOver;
+
+        ///////ScrollObject[] scrollObjects = GameObject.FindObjectsOfType<ScrollObject>();
+
+        /////foreach (ScrollObject so in scrollObjects) so.enabled = false;
+        ///     
+
+        BGMSource.Pause();
+        cursornum = 1;
+
+        window.gameObject.SetActive(true);
+        stateLabel.gameObject.SetActive(true);
+        stateLabel.text = "GameOver";
+        SelectCursor[0].gameObject.SetActive(false);
+        SelectCursor[1].gameObject.SetActive(true);
+        SelectCursor[2].gameObject.SetActive(false);
+
+        getRanking();
+        setRanking();
+   
+        Invoke("Backtitle", 20.0f);
     }
 
     public void Retry()
@@ -291,10 +260,8 @@ public class GameControllerScript : MonoBehaviour
 
         soundScript.DecideSound1();
 
-        Pause.gameObject.SetActive(false);
-        PauseBackGame.gameObject.SetActive(false);
-        TweetBool = false;
-        //       Application.LoadLevel(Application.loadedLevel);
+        window.gameObject.SetActive(false);
+
         SceneManager.LoadScene("GameScene");
     }
 
@@ -309,49 +276,18 @@ public class GameControllerScript : MonoBehaviour
         jud_gameover = true;
     }
 
-    public void push_pause()
-    {
-        if (jud_pause == false)
-        {
-            Stop();
-            stopScreen.Pause();
-            soundScript.DecideSound2();
-            jud_pause = true;
-        }
-        else if(jud_pause ==true)
-        {
-            Backgame();
-            stopScreen.BackPause();
-            soundScript.DecideSound1();
-            jud_pause = false;
-        }
-        
-    }
 
     public void CursorUp()
     {
-        if (cursornum > 0) cursornum--;
+        if (cursornum > 0 && state != State.GameOver) cursornum--;
+        else if (cursornum > 1) cursornum--;
 
         soundScript.DecideSound2();
 
-        if (cursornum == 0)
-        {
-            SelectCursor0.gameObject.SetActive(true);
-            SelectCursor1.gameObject.SetActive(false);
-            SelectCursor2.gameObject.SetActive(false);
-        }
-        else if (cursornum == 1)
-        {
-            SelectCursor0.gameObject.SetActive(false);
-            SelectCursor1.gameObject.SetActive(true);
-            SelectCursor2.gameObject.SetActive(false);
-        }
-        else if (cursornum == 2)
-        {
-            SelectCursor0.gameObject.SetActive(false);
-            SelectCursor1.gameObject.SetActive(false);
-            SelectCursor2.gameObject.SetActive(true);
-        }
+        SelectCursor[cursornum].gameObject.SetActive(true);
+        SelectCursor[(cursornum + 1) % 3].gameObject.SetActive(false);
+        SelectCursor[(cursornum + 2) % 3].gameObject.SetActive(false);
+
     }
     public void CursorDown()
     {
@@ -359,39 +295,17 @@ public class GameControllerScript : MonoBehaviour
 
         soundScript.DecideSound2();
 
-        if (cursornum == 0)
-        {
-            SelectCursor0.gameObject.SetActive(true);
-            SelectCursor1.gameObject.SetActive(false);
-            SelectCursor2.gameObject.SetActive(false);
-        }
-        else if (cursornum == 1)
-        {
-            SelectCursor0.gameObject.SetActive(false);
-            SelectCursor1.gameObject.SetActive(true);
-            SelectCursor2.gameObject.SetActive(false);
-        }
-        else if (cursornum == 2)
-        {
-            SelectCursor0.gameObject.SetActive(false);
-            SelectCursor1.gameObject.SetActive(false);
-            SelectCursor2.gameObject.SetActive(true);
-        }
+        SelectCursor[cursornum].gameObject.SetActive(true);
+        SelectCursor[(cursornum + 1) % 3].gameObject.SetActive(false);
+        SelectCursor[(cursornum + 2) % 3].gameObject.SetActive(false);
+
     }
     public void CursorEnter()
     {
-        if (cursornum == 0&&state != State.GameOver)
-        {
-            Backgame();
-        }
-        else if (cursornum == 1)
-        {
-            Retry();
-        }
-        else if (cursornum == 2)
-        {
-            Backtitle();
-        }
+        if (cursornum == 0 && state != State.GameOver) Backgame();
+        else if (cursornum == 1) Retry();
+        else if (cursornum == 2) Backtitle();
+
     }
 
     void getRanking()
@@ -410,6 +324,28 @@ public class GameControllerScript : MonoBehaviour
             }
         }
     }
+
+    void setRanking()
+    {
+        scoreForRanking = score;
+
+        for (int m = 0; m < 5; m++)
+        {
+            if (scoreForRanking > Ranking[m])
+            {
+                scoreForRankingTmp = Ranking[m];
+
+                Ranking[m] = scoreForRanking;
+
+                scoreForRanking = scoreForRankingTmp;
+            }
+
+        }
+
+        PlayerPrefs.SetString(RankingPref, Ranking[0].ToString() + "," + Ranking[1].ToString() + "," + Ranking[2].ToString() + "," + Ranking[3].ToString() + "," + Ranking[4].ToString());
+
+    }
+
 
     public void active_deathCamera()
     {
