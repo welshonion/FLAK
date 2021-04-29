@@ -16,7 +16,7 @@
 
 - /Assets/Imported/直下にParticlePackをImport
 
-##お借りした素材(敬称略)
+## お借りした素材(敬称略)
 
 - 25ミリ連装機銃/マジロン
 - 秋月型駆逐艦/HI\- 
