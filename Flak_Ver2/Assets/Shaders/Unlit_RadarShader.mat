@@ -25,5 +25,5 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _FDIST: 0
-    - _FValue: 85
+    - _FValue: 197
     m_Colors: []
