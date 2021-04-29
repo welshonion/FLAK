@@ -10,6 +10,8 @@
 /Flak_Ver2/[Ll]ogs/
 /Flak_Ver2/[Mm]emoryCaptures/
 
+/Flak_Ver2/[A]ssets/Imported/ParticlePack/
+
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/Flak_Ver2/[Aa]ssets/**/*.meta
 
